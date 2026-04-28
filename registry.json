@@ -1,6 +1,6 @@
 {
   "schema": "1.0.0",
-  "generated": "2026-04-28T12:51:21Z",
+  "generated": "2026-04-28T13:02:15Z",
   "plugins": [
     {
       "name": "commit-message",
@@ -46,7 +46,7 @@
       "type": "skill",
       "description": "Interview workflow toolkit: pre-screening assessment, question guide, and scored post-interview evaluation with PDF export",
       "author": "glorykidd",
-      "files": ["commands/assess-candidate.md","commands/build-questions.md","commands/evaluate-candidate.md","skills/interview/skill.md"],
+      "files": ["commands/assess-candidate.md","commands/build-questions.md","commands/create.md","commands/evaluate-candidate.md","skills/interview/skill.md"],
       "metadata": {
         "artifactName": "Interview Workflow Toolkit",
         "owner": "glorykidd",
