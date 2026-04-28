@@ -64,10 +64,35 @@ If `dnuckolls_intro.md` does not already exist, create it with this template:
 
 If `dnuckolls_intro.md` already exists, leave it untouched.
 
-### Step 4: Confirm Output
+### Step 4: Confirm Output and Give Setup Instructions
 
-Report:
-- Which folders were created vs. already existed
-- Whether `dnuckolls_intro.md` was created or already present
-- The full workspace structure using `ls -1`
-- Next step: "Add a resume PDF to `candidates/` and a job description PDF to `job-description/`, then run `/interview assess <CandidateName>`."
+Report which folders were created vs. already existed, and whether `dnuckolls_intro.md` was created or already present.
+
+Then print the following setup checklist verbatim so the user knows exactly what to do next:
+
+---
+
+**Workspace ready. Complete these steps before running your first interview:**
+
+**1. Add the job description**
+Drop the job description PDF into `job-description/`. One file only — the workflow auto-detects the first PDF it finds.
+
+**2. Add candidate resumes**
+Drop each candidate's resume PDF into `candidates/`. Name the file with the candidate's full name so the workflow can match it (e.g., `JaneDoe.pdf` or `Jane_Doe_Resume.pdf`).
+
+**3. Fill out your interviewer intro**
+Open `dnuckolls_intro.md` and complete all sections:
+- **About Me** — your name, role, and a sentence about your team
+- **What We're Looking For** — the two or three qualities that matter most for this role
+- **Senior Candidates Introduction** — the exact words you read aloud to open every interview
+- **Team Context** — two or three talking points you can offer when candidates ask about the team
+
+This file is read by every step in the workflow. The more specific it is, the better the assessments and question guides will be.
+
+**4. Start the workflow**
+Once the above are in place:
+```
+/interview assess <CandidateName>
+```
+
+---
