@@ -1,0 +1,20 @@
+{
+  "name": "pr-description",
+  "version": "1.0.0",
+  "description": "Generate detailed pull request descriptions from branch diff",
+  "author": {
+    "name": "glorykidd"
+  },
+  "metadata": {
+    "artifactName": "PR Description Generator",
+    "type": "skill",
+    "owner": "glorykidd",
+    "maxDataClassification": "Public",
+    "llmModel": "any",
+    "networkExposure": "none",
+    "externalDependencies": [],
+    "writeActions": false,
+    "approvalStatus": "approved",
+    "lastReviewedDate": "2026-04-28"
+  }
+}

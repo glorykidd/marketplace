@@ -1,0 +1,20 @@
+{
+  "name": "commit-message",
+  "version": "1.0.0",
+  "description": "Generate clear, conventional commit messages from staged changes",
+  "author": {
+    "name": "glorykidd"
+  },
+  "metadata": {
+    "artifactName": "Commit Message Generator",
+    "type": "skill",
+    "owner": "glorykidd",
+    "maxDataClassification": "Public",
+    "llmModel": "any",
+    "networkExposure": "none",
+    "externalDependencies": [],
+    "writeActions": false,
+    "approvalStatus": "approved",
+    "lastReviewedDate": "2026-04-28"
+  }
+}

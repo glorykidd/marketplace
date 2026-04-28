@@ -1,0 +1,20 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "A minimal example plugin demonstrating the marketplace plugin structure",
+  "author": {
+    "name": "your-name-here"
+  },
+  "metadata": {
+    "artifactName": "Hello World",
+    "type": "bundle",
+    "owner": "your-name-here",
+    "maxDataClassification": "Public",
+    "llmModel": "any",
+    "networkExposure": "none",
+    "externalDependencies": [],
+    "writeActions": false,
+    "approvalStatus": "approved",
+    "lastReviewedDate": "2026-04-28"
+  }
+}

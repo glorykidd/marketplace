@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)",
+      "Bash(./generate-registry.sh)",
+      "Bash(bash generate-registry.sh)"
+    ]
+  }
+}

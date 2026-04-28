@@ -1,0 +1,20 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "Interview workflow toolkit: pre-screening assessment, question guide, and scored post-interview evaluation with PDF export",
+  "author": {
+    "name": "glorykidd"
+  },
+  "metadata": {
+    "artifactName": "Interview Workflow Toolkit",
+    "type": "skill",
+    "owner": "glorykidd",
+    "maxDataClassification": "Public",
+    "llmModel": "any",
+    "networkExposure": "none",
+    "externalDependencies": ["pandoc"],
+    "writeActions": true,
+    "approvalStatus": "approved",
+    "lastReviewedDate": "2026-04-28"
+  }
+}
