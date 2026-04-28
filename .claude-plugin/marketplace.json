@@ -1,5 +1,4 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "glorykidd-skills-marketplace",
   "description": "Public marketplace for Claude Code skills, agents, and bundles",
   "owner": {
