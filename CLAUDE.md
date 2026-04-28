@@ -13,22 +13,57 @@ This is the GloryKidd public skills marketplace — a curated registry of Claude
 ```
 marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json        # Top-level marketplace manifest
+│   └── marketplace.json        # Top-level marketplace manifest (all plugin entries)
 ├── plugins/
-│   └── <plugin-name>/
-│       ├── .claude-plugin/
-│       │   └── plugin.json     # Per-plugin manifest
-│       ├── commands/           # Skill files (.md)
-│       ├── agents/             # Agent files (.md)
-│       ├── mcp/
-│       │   └── server.json     # MCP server config (MCP plugins only)
-│       └── README.md
-├── registry.json               # Auto-generated index (source of truth for installers)
-├── generate-registry.sh        # Regenerates registry.json from plugins/
+│   ├── commit-message/         # skill — generate conventional commit messages
+│   ├── pr-description/         # skill — generate PR descriptions from branch diff
+│   ├── debug-assistant/        # bundle — root cause analysis + autonomous investigator
+│   └── interview/              # skill — full interview workflow (create, assess, questions, evaluate)
+│       └── <plugin>/
+│           ├── .claude-plugin/
+│           │   └── plugin.json # Per-plugin manifest
+│           ├── commands/       # Slash command files (.md)
+│           ├── agents/         # Agent files (.md)
+│           ├── skills/         # Skill router files (.md) — optional entry-point skill
+│           │   └── <name>/
+│           │       └── skill.md
+│           └── README.md
+├── templates/
+│   └── hello-world/            # Copy-paste starter demonstrating all plugin layers
+├── registry.json               # Auto-generated index — never edit manually
+├── generate-registry.sh        # Regenerates registry.json from all plugins/
 ├── .claude/
-│   └── settings.json           # Allowed bash commands
+│   └── settings.json           # Allowed bash commands for this repo
 └── CLAUDE.md
 ```
+
+## Current Plugins
+
+### commit-message
+- **Type**: skill
+- **Commands**: `generate` — produces a Conventional Commits message from staged changes
+- **External deps**: none
+
+### pr-description
+- **Type**: skill
+- **Commands**: `generate` — produces a full PR description (Summary, Changes, Test Plan, Notes) from branch diff
+- **External deps**: none
+
+### debug-assistant
+- **Type**: bundle
+- **Commands**: `analyze` — structured root cause analysis with ranked fix candidates
+- **Agents**: `investigate` — autonomous end-to-end bug investigator (reads code, traces execution, proposes a fix)
+- **External deps**: none
+
+### interview
+- **Type**: skill
+- **Commands**:
+  - `create` — initializes workspace folders (`candidates/`, `job-description/`, `questions/`, `interviews/`, `evaluations/`) and scaffolds `dnuckolls_intro.md`; prints a setup checklist
+  - `assess-candidate` — pre-screening strengths/gaps analysis + two targeted questions from resume and JD
+  - `build-questions` — full interview guide from assessment (spoken intro, 4–5 questions with follow-ups and listen-fors)
+  - `evaluate-candidate` — scored post-interview evaluation from transcript + summary; exports `.md` and `.pdf`
+- **Skills**: `interview` router — single entry point routing `create|assess|questions|evaluate` to the matching command
+- **External deps**: `pandoc` (for PDF export in `evaluate-candidate`)
 
 ## Plugin Types
 
@@ -45,18 +80,20 @@ marketplace/
 - Plugin names are lowercase, hyphen-separated (e.g. `commit-message`)
 - Command files go in `commands/<command-name>.md` with YAML frontmatter (`description`, optional `argument-hint`)
 - Agent files go in `agents/<agent-name>.md` with frontmatter (`name`, `description`, `tools`, `model`, `color`)
+- Skill router files go in `skills/<name>/skill.md` with frontmatter (`name`, `description`, `allowed-tools`, `argument-hint`)
 - `registry.json` is always regenerated via `./generate-registry.sh` — never edit it manually
 - `maxDataClassification` must be `Public` for all community-submitted plugins
 
 ## Adding a New Plugin
 
-1. Create `plugins/<name>/` directory
-2. Add `.claude-plugin/plugin.json`
-3. Add command files in `commands/` and/or agent files in `agents/`
-4. Add a `README.md`
+1. Copy `templates/hello-world` to `plugins/<your-plugin-name>/`
+2. Update `.claude-plugin/plugin.json` — set `name`, `description`, `author`, and `metadata`
+3. Replace command/agent/skill files with your own logic
+4. Add a `README.md` documenting usage, commands, and any external dependencies
 5. Run `./generate-registry.sh`
-6. Update `.claude-plugin/marketplace.json` to include the new plugin entry
+6. Add your plugin entry to `.claude-plugin/marketplace.json`
 7. Commit all files including the updated `registry.json`
+8. Open a pull request
 
 ## Commands & Scripts
 
