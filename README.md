@@ -10,6 +10,7 @@ A public marketplace of Claude Code plugins — skills, agents, and bundles you 
 | [pr-description](./plugins/pr-description) | skill | Generate PR descriptions from branch diff |
 | [debug-assistant](./plugins/debug-assistant) | bundle | Root cause analysis command + autonomous debugging agent |
 | [interview](./plugins/interview) | skill | Full interview workflow: workspace setup, pre-screening assessment, question guide, and scored evaluation with PDF export |
+| [security-review](./plugins/security-review) | bundle | Comprehensive security audit against OWASP Top 10, CWE, NIST 800-53, CIS Benchmarks, SOC 2, ISO 27001 |
 
 ## How It Works
 

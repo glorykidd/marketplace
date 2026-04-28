@@ -1,6 +1,6 @@
 {
   "schema": "1.0.0",
-  "generated": "2026-04-28T13:02:15Z",
+  "generated": "2026-04-28T13:51:49Z",
   "plugins": [
     {
       "name": "commit-message",
@@ -74,6 +74,25 @@
         "networkExposure": "none",
         "externalDependencies": [],
         "writeActions": false,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "security-review",
+      "version": "1.0.0",
+      "type": "bundle",
+      "description": "Comprehensive security audit against OWASP Top 10, CWE, NIST 800-53, CIS Benchmarks, SOC 2, ISO 27001",
+      "author": "glorykidd",
+      "files": ["commands/audit.md","agents/security-reviewer.md"],
+      "metadata": {
+        "artifactName": "Security Review",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "opus",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": true,
         "approvalStatus": "approved",
         "lastReviewedDate": "2026-04-28"
       }

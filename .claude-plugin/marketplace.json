@@ -93,6 +93,28 @@
         "approvalStatus": "approved",
         "lastReviewedDate": "2026-04-28"
       }
+    },
+    {
+      "name": "security-review",
+      "description": "Comprehensive security audit against OWASP Top 10, CWE, NIST 800-53, CIS Benchmarks, SOC 2, ISO 27001",
+      "version": "1.0.0",
+      "author": {
+        "name": "glorykidd"
+      },
+      "source": "./plugins/security-review",
+      "category": "security",
+      "metadata": {
+        "artifactName": "Security Review",
+        "type": "bundle",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "opus",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
     }
   ]
 }
