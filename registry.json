@@ -1,0 +1,82 @@
+{
+  "schema": "1.0.0",
+  "generated": "2026-04-28T12:51:21Z",
+  "plugins": [
+    {
+      "name": "commit-message",
+      "version": "1.0.0",
+      "type": "skill",
+      "description": "Generate clear, conventional commit messages from staged changes",
+      "author": "glorykidd",
+      "files": ["commands/generate.md"],
+      "metadata": {
+        "artifactName": "Commit Message Generator",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": false,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "debug-assistant",
+      "version": "1.0.0",
+      "type": "bundle",
+      "description": "Interactive debugging assistant with root cause analysis and fix suggestions",
+      "author": "glorykidd",
+      "files": ["commands/analyze.md","agents/investigate.md"],
+      "metadata": {
+        "artifactName": "Debug Assistant",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "interview",
+      "version": "1.0.0",
+      "type": "skill",
+      "description": "Interview workflow toolkit: pre-screening assessment, question guide, and scored post-interview evaluation with PDF export",
+      "author": "glorykidd",
+      "files": ["commands/assess-candidate.md","commands/build-questions.md","commands/evaluate-candidate.md","skills/interview/skill.md"],
+      "metadata": {
+        "artifactName": "Interview Workflow Toolkit",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": ["pandoc"],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "pr-description",
+      "version": "1.0.0",
+      "type": "skill",
+      "description": "Generate detailed pull request descriptions from branch diff",
+      "author": "glorykidd",
+      "files": ["commands/generate.md"],
+      "metadata": {
+        "artifactName": "PR Description Generator",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": false,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    }
+  ]
+}

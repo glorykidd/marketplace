@@ -1,0 +1,99 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "glorykidd-skills-marketplace",
+  "description": "Public marketplace for Claude Code skills, agents, and bundles",
+  "owner": {
+    "name": "glorykidd",
+    "email": "hello@glorykidd.com"
+  },
+  "plugins": [
+    {
+      "name": "commit-message",
+      "description": "Generate clear, conventional commit messages from staged changes",
+      "version": "1.0.0",
+      "author": {
+        "name": "glorykidd"
+      },
+      "source": "./plugins/commit-message",
+      "category": "development",
+      "metadata": {
+        "artifactName": "Commit Message Generator",
+        "type": "skill",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": false,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "pr-description",
+      "description": "Generate detailed pull request descriptions from branch diff",
+      "version": "1.0.0",
+      "author": {
+        "name": "glorykidd"
+      },
+      "source": "./plugins/pr-description",
+      "category": "development",
+      "metadata": {
+        "artifactName": "PR Description Generator",
+        "type": "skill",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": false,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "interview",
+      "description": "Interview workflow toolkit: pre-screening assessment, question guide, and scored post-interview evaluation with PDF export",
+      "version": "1.0.0",
+      "author": {
+        "name": "glorykidd"
+      },
+      "source": "./plugins/interview",
+      "category": "productivity",
+      "metadata": {
+        "artifactName": "Interview Workflow Toolkit",
+        "type": "skill",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": ["pandoc"],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "debug-assistant",
+      "description": "Interactive debugging assistant with root cause analysis and fix suggestions",
+      "version": "1.0.0",
+      "author": {
+        "name": "glorykidd"
+      },
+      "source": "./plugins/debug-assistant",
+      "category": "development",
+      "metadata": {
+        "artifactName": "Debug Assistant",
+        "type": "bundle",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-04-28"
+      }
+    }
+  ]
+}
