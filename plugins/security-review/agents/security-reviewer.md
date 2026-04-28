@@ -80,7 +80,7 @@ Evaluate these minimum security controls as **Pass / Fail / Partial / N/A**:
 8. TLS/HTTPS enforced (redirects, HSTS headers, secure cookie flags)
 9. CSRF protection enabled on state-changing endpoints
 10. Input validation on all user-facing endpoints
-11. SQL injection protection (parameterized queries or ORM)
+11. Command injection protection (no unsanitized user input in shell/exec calls)
 12. XSS protection (output encoding, CSP headers)
 13. Security headers present (X-Content-Type-Options, X-Frame-Options, CSP, etc.)
 14. Rate limiting on authentication and sensitive endpoints
@@ -211,7 +211,7 @@ Write the full report to `security-review/<project>-security-review-<YYYY-MM-DD>
 - Be thorough but precise. Every finding must have evidence (file:line + code).
 - Do not manufacture findings. If a category has no issues, say so.
 - Acknowledge security strengths — a clean area is a valid outcome.
-- When uncertain about a finding, note your confidence level and mark as Informational.
+- When uncertain about a finding, note your confidence level as a percentage and mark as Informational.
 - Respect project conventions found in CLAUDE.md, README, or similar files.
 - If `--severity` is specified, still analyze everything but only include findings at or above that severity in the report.
 - Never execute, build, or modify project code. Read-only operations only.

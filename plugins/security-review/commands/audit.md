@@ -86,7 +86,7 @@ Evaluate these minimum security controls as **Pass / Fail / Partial / N/A**:
 8. TLS/HTTPS enforced (redirects, HSTS headers, secure cookie flags)
 9. CSRF protection enabled on state-changing endpoints
 10. Input validation on all user-facing endpoints
-11. SQL injection protection (parameterized queries or ORM)
+11. Command injection protection (no unsanitized user input in shell/exec calls)
 12. XSS protection (output encoding, CSP headers)
 13. Security headers present (X-Content-Type-Options, X-Frame-Options, CSP, etc.)
 14. Rate limiting on authentication and sensitive endpoints
