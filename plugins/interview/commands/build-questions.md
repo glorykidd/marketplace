@@ -44,7 +44,7 @@ Store responses as:
 - `include_intro` — `true` or `false`
 - `interview_format` — `solo` or `team`
 
-## Step 4: Read All Inputs
+## Step 3: Read All Inputs
 
 Read the assessment, JD, and interviewer intro in full. Identify:
 
@@ -53,7 +53,7 @@ Read the assessment, JD, and interviewer intro in full. Identify:
 - The JD requirements that most need probing beyond what the resume answers
 - The interviewer's stated priorities from `dnuckolls_intro.md` (read regardless of `include_intro` — it informs question context)
 
-## Step 5: Produce the Interview Guide
+## Step 4: Produce the Interview Guide
 
 Write to `questions/<CandidateLastName><CandidateFirstName>_questions.md`.
 
@@ -121,7 +121,7 @@ Exact question wording matters. Write the question as it would actually be spoke
 
 The "listen for" sections should be opinionated: name what signals distinguish a strong answer from a weak one for *this specific role and candidate*.
 
-## Step 6: Confirm Output
+## Step 5: Confirm Output
 
 Report the path to the written guide and list the five core questions by title so the user can quickly confirm coverage.
 
