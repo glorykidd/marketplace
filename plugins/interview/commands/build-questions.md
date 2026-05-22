@@ -31,16 +31,29 @@ Produce a structured, ready-to-use interview guide from a pre-screening assessme
 
 Report files found. If the assessment is missing, stop and ask the user to run `/interview:assess-candidate` first.
 
-## Step 2: Read All Inputs
+## Step 2: Ask Format Questions
+
+Before generating the guide, ask the user two questions:
+
+1. **Include interviewer introduction?** — "Should the guide include the spoken interviewer introduction from `dnuckolls_intro.md`? (yes / no)"
+2. **Interview format?** — "Is this a solo interview or a team interview? (solo / team)"
+
+Wait for both answers before proceeding.
+
+Store responses as:
+- `include_intro` — `true` or `false`
+- `interview_format` — `solo` or `team`
+
+## Step 4: Read All Inputs
 
 Read the assessment, JD, and interviewer intro in full. Identify:
 
 - The two pre-planned questions from the assessment (use these as the core of the guide)
 - The central tension or key unknown about this candidate
 - The JD requirements that most need probing beyond what the resume answers
-- The interviewer's stated priorities from `dnuckolls_intro.md`
+- The interviewer's stated priorities from `dnuckolls_intro.md` (read regardless of `include_intro` — it informs question context)
 
-## Step 3: Produce the Interview Guide
+## Step 5: Produce the Interview Guide
 
 Write to `questions/<CandidateLastName><CandidateFirstName>_questions.md`.
 
@@ -58,7 +71,9 @@ Use **exactly** this structure:
 
 ### Interviewer Introduction
 
-Paste the "Senior Candidates" spoken introduction from `dnuckolls_intro.md` verbatim. This is what David reads aloud to open the interview.
+If `include_intro` is `true`: paste the "Senior Candidates" spoken introduction from `dnuckolls_intro.md` verbatim. This is what David reads aloud to open the interview.
+
+If `include_intro` is `false`: omit this section entirely.
 
 ### Opening (5 min)
 
@@ -92,7 +107,9 @@ Section header only. Include two to three suggested talking points about the tea
 
 ### Close
 
-Standard: thank the candidate, explain the next steps in the process (without committing to a timeline), and invite any final questions.
+If `interview_format` is `solo`: thank the candidate personally, explain the next steps in the process (without committing to a timeline), and invite any final questions. Use first-person singular language ("I'll follow up...", "I'll share your feedback with the team...").
+
+If `interview_format` is `team`: use inclusive language throughout — refer to "we" and "the team" rather than a single interviewer ("We'll follow up...", "The team will review feedback together...", "We appreciate your time today..."). Acknowledge that the candidate may have spoken with multiple people and that next steps will come from the team collectively.
 
 ---
 
@@ -104,6 +121,13 @@ Exact question wording matters. Write the question as it would actually be spoke
 
 The "listen for" sections should be opinionated: name what signals distinguish a strong answer from a weak one for *this specific role and candidate*.
 
-## Step 4: Confirm Output
+## Step 6: Confirm Output
 
 Report the path to the written guide and list the five core questions by title so the user can quickly confirm coverage.
+
+Then append this note exactly:
+
+---
+**Next steps:**
+1. **Conduct the interview** — use the guide above during the call. Record the session if possible and save the transcript to `interviews/<CandidateName>_transcript.md`.
+2. **Evaluate the candidate** — once the interview is complete, run `/interview evaluate <CandidateName>` to produce a scored evaluation and PDF.

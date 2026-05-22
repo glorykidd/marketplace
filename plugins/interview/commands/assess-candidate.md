@@ -108,3 +108,8 @@ The questions should be tailored to *this candidate's resume* — they should no
 ## Step 4: Confirm Output
 
 Report the path to the written assessment and give a one-sentence summary of the overall fit verdict.
+
+Then append this note exactly:
+
+---
+**Next step:** Run `/interview questions <CandidateName>` to build a full interview guide from this assessment.
