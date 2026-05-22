@@ -24,7 +24,31 @@ Parse:
 | `questions` | `/interview:build-questions <CandidateName>` |
 | `evaluate` | `/interview:evaluate-candidate <CandidateName>` |
 
-If no step is provided, list all four steps with one-line descriptions and ask the user which to run.
+If no step is provided, display the following usage guide exactly, then ask the user which step to run:
+
+---
+
+**Interview Plugin** — a structured workflow for running candidate interviews.
+
+**Usage:** `/interview <step> [CandidateName]`
+
+**Steps (run in order):**
+
+| Step | Command | Description |
+|---|---|---|
+| 1 | `create` | Initialize workspace folders and scaffold the interviewer intro file. Run this first in a new directory. |
+| 2 | `assess <Name>` | Generate a pre-screening assessment from the candidate's resume and job description. Produces `questions/<Name>_assessment.md`. |
+| 3 | `questions <Name>` | Build a full interview guide from the assessment. Produces `questions/<Name>_questions.md` with intro, core questions, follow-ups, and listen-fors. |
+| 4 | `evaluate <Name>` | Write a scored post-interview evaluation from the transcript and assessment. Produces `evaluations/<Name>_evaluation.md` and a PDF. |
+
+**Workflow:**
+```
+create → [add resume + JD to candidates/] → assess <Name> → questions <Name> → [conduct interview] → evaluate <Name>
+```
+
+**External dependencies:** `pandoc` (required for PDF export in `evaluate`)
+
+---
 
 If no candidate name is provided for `assess`, `questions`, or `evaluate`, list available candidates from `candidates/` using `Bash(ls candidates/)` and ask.
 

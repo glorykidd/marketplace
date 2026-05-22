@@ -1,6 +1,6 @@
 {
   "name": "interview",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Interview workflow toolkit: pre-screening assessment, question guide, and scored post-interview evaluation with PDF export",
   "author": {
     "name": "glorykidd"
