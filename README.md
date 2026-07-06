@@ -11,6 +11,7 @@ A public marketplace of Claude Code plugins — skills, agents, and bundles you 
 | [debug-assistant](./plugins/debug-assistant) | bundle | Root cause analysis command + autonomous debugging agent |
 | [interview](./plugins/interview) | skill | Full interview workflow: workspace setup, pre-screening assessment, question guide, and scored evaluation with PDF export |
 | [security-review](./plugins/security-review) | bundle | Comprehensive security audit against OWASP Top 10, CWE, NIST 800-53, CIS Benchmarks, SOC 2, ISO 27001 |
+| [display-slide](./plugins/display-slide) | skill | Build polished 1920x1080 PNG announcement slides for church, school, or ministry lobby screens |
 
 ## How It Works
 

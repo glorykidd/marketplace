@@ -1,0 +1,148 @@
+<!--
+Reference boilerplate for a 1920x1080 display slide.
+Copy this, then customize palette/fonts/copy per the SKILL.md guidance.
+Font paths assume this file sits next to an assets/fonts/ folder (adjust relative paths as needed).
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face {
+    font-family: 'Playfair';
+    src: url('assets/fonts/PlayfairDisplay-Variable.ttf') format('truetype');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'GreatVibes';
+    src: url('assets/fonts/GreatVibes-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Manrope';
+    src: url('assets/fonts/Manrope-Variable.ttf') format('truetype');
+    font-weight: 200 800;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body {
+    width: 1920px;
+    height: 1080px;
+    font-family: 'Manrope', sans-serif;
+    /* Swap these three colors per-slide to differentiate ministries while keeping the family feel */
+    background:
+      radial-gradient(1000px 620px at 90% -6%, rgba(169,84,44,0.12) 0%, rgba(169,84,44,0) 60%),
+      radial-gradient(900px 640px at 6% 106%, rgba(124,139,111,0.14) 0%, rgba(124,139,111,0) 60%),
+      linear-gradient(160deg, #FCF6EA 0%, #F8EFDD 55%, #F3E7D0 100%);
+    overflow: hidden;
+    position: relative;
+    color: #3B3226;
+  }
+
+  /* ---- Header bar: logo card (top-left) + eyebrow tag (top-right) ---- */
+  .header {
+    position: relative;
+    z-index: 5;
+    padding: 60px 130px 0 130px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-card {
+    background: #FFFFFF; /* use a light plate behind logos with baked-in white backgrounds */
+    border-radius: 16px;
+    padding: 16px 26px;
+    box-shadow: 0 10px 28px rgba(120,90,50,0.12);
+  }
+  .logo-card img { height: 42px; width: auto; display: block; }
+  .header-tag {
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #A9542C; /* accent color */
+  }
+
+  /* ---- Hero ---- */
+  .hero { position: relative; z-index: 5; padding: 56px 130px 0 130px; max-width: 1760px; }
+  h1 {
+    font-family: 'Playfair', serif;
+    font-weight: 800;
+    font-size: 84px;
+    line-height: 1.04;
+    color: #3B3226;
+  }
+  .hero-sub {
+    font-size: 24px;
+    line-height: 1.6;
+    color: #6B5D48;
+    margin-top: 26px;
+    max-width: 980px;
+    font-weight: 500;
+  }
+
+  /* ---- Generic card row (used for tiers / features / roles) ---- */
+  .cards { position: relative; z-index: 5; display: flex; gap: 28px; margin: 70px 130px 0 130px; }
+  .card {
+    flex: 1;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(169,84,44,0.16);
+    border-radius: 18px;
+    padding: 34px 36px;
+  }
+  .card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .card-icon {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: #A9542C; color: #FCF6EA;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .card-title { font-family: 'Playfair', serif; font-weight: 700; font-size: 26px; color: #A9542C; }
+  .card-desc { font-size: 17px; line-height: 1.5; color: #6B5D48; }
+
+  /* ---- Footer bar ---- */
+  .footer {
+    position: absolute; bottom: 0; left: 0; width: 1920px;
+    padding: 28px 130px;
+    display: flex; align-items: center; gap: 40px;
+    background: rgba(59,50,38,0.06);
+    border-top: 1px solid rgba(169,84,44,0.2);
+  }
+  .footer-item { font-size: 18px; color: #6B5D48; white-space: nowrap; }
+  .footer-item b { color: #3B3226; font-weight: 700; }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo-card"><img src="logo.png" alt="Org logo"></div>
+    <div class="header-tag">Eyebrow Tag Here</div>
+  </div>
+
+  <div class="hero">
+    <h1>Headline Goes Here</h1>
+    <div class="hero-sub">Supporting sentence pulled from real content — not filler.</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">★</div>
+        <div class="card-title">Card One</div>
+      </div>
+      <div class="card-desc">Description text.</div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon">★</div>
+        <div class="card-title">Card Two</div>
+      </div>
+      <div class="card-desc">Description text.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-item">📍 <b>Address here</b></div>
+    <div class="footer-item">📞 <b>Phone here</b></div>
+  </div>
+
+</body>
+</html>

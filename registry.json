@@ -1,6 +1,6 @@
 {
   "schema": "1.0.0",
-  "generated": "2026-05-22T12:21:12Z",
+  "generated": "2026-07-06T12:56:45Z",
   "plugins": [
     {
       "name": "commit-message",
@@ -38,6 +38,25 @@
         "writeActions": true,
         "approvalStatus": "approved",
         "lastReviewedDate": "2026-04-28"
+      }
+    },
+    {
+      "name": "display-slide",
+      "version": "1.0.0",
+      "type": "skill",
+      "description": "Creates polished 1920x1080 PNG announcement/display slides for a church, school, or ministry lobby TV or projector screen",
+      "author": "glorykidd",
+      "files": ["skills/display-slide/SKILL.md"],
+      "metadata": {
+        "artifactName": "Display Slide Creator",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "outbound",
+        "externalDependencies": ["playwright"],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-07-06"
       }
     },
     {
