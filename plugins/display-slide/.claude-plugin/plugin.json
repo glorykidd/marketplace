@@ -1,0 +1,20 @@
+{
+  "name": "display-slide",
+  "version": "1.0.0",
+  "description": "Creates polished 1920x1080 PNG announcement/display slides for a church, school, or ministry lobby TV or projector screen",
+  "author": {
+    "name": "glorykidd"
+  },
+  "metadata": {
+    "artifactName": "Display Slide Creator",
+    "type": "skill",
+    "owner": "glorykidd",
+    "maxDataClassification": "Public",
+    "llmModel": "any",
+    "networkExposure": "outbound",
+    "externalDependencies": ["playwright"],
+    "writeActions": true,
+    "approvalStatus": "approved",
+    "lastReviewedDate": "2026-07-06"
+  }
+}

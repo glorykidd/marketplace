@@ -65,6 +65,11 @@ marketplace/
 - **Skills**: `interview` router — single entry point routing `create|assess|questions|evaluate` to the matching command
 - **External deps**: `pandoc` (for PDF export in `evaluate-candidate`)
 
+### display-slide
+- **Type**: skill
+- **Skills**: `display-slide` — builds a single 1920x1080 PNG announcement/display slide (HTML/CSS + Playwright render) for a church, school, or ministry
+- **External deps**: `playwright` (Chromium render + layout verification)
+
 ## Plugin Types
 
 | Type | Has commands/ | Has agents/ | Has mcp/server.json |
