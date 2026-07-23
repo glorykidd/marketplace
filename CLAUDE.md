@@ -112,7 +112,9 @@ python3 -m json.tool registry.json
 
 **Requires `jq` and `perl`** — `generate-registry.sh` depends on both. The CI workflow
 (`.github/workflows/validate-registry.yml`) runs on a self-hosted Windows runner under
-`pwsh`; it expects `jq` on `PATH` and invokes `generate-registry.sh` via Git for Windows'
-bundled bash (`C:\Program Files\Git\bin\bash.exe`), so `perl` must be reachable from
-*that* bash, not necessarily the pwsh session's own `PATH`. The workflow's "Check required
-tooling is available" step fails fast with a clear message if either is missing.
+Windows PowerShell (`powershell.exe`, not PowerShell Core/`pwsh` — the runner has no
+`pwsh` on `PATH`); it expects `jq` on `PATH` and invokes `generate-registry.sh` via Git
+for Windows' bundled bash (`C:\Program Files\Git\bin\bash.exe`), so `perl` must be
+reachable from *that* bash, not necessarily the PowerShell session's own `PATH`. The
+workflow's "Check required tooling is available" step fails fast with a clear message
+if either is missing.
