@@ -12,7 +12,9 @@ jobs:
     runs-on: [ self-hosted ]
     defaults:
       run:
-        shell: pwsh
+        # Windows PowerShell (5.1), not PowerShell Core (pwsh) — this runner has no
+        # pwsh on PATH, but powershell.exe ships built into every Windows install.
+        shell: powershell
     env:
       # Single source of truth for Git for Windows' bundled bash — generate-registry.sh
       # is a bash script and must be invoked through it rather than relying on PATH.
