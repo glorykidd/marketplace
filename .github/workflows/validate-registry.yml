@@ -1,19 +1,35 @@
 name: Validate registry
 
+# Runs on push to main only, not on pull_request — this is a self-hosted runner and the
+# repo accepts external plugin submissions via PR. Combined with CODEOWNERS gating who can
+# merge to main, this keeps untrusted PR code from ever executing on the runner.
 on:
-  pull_request:
-    branches: [main]
   push:
     branches: [main]
 
 jobs:
   validate:
-    runs-on: [self-hosted, Windows]
+    runs-on: [ self-hosted ]
     defaults:
       run:
         shell: bash
     steps:
       - uses: actions/checkout@v6
+
+      - name: Check required tooling is available
+        run: |
+          set -euo pipefail
+          missing=0
+          for tool in jq perl; do
+            if ! command -v "$tool" >/dev/null 2>&1; then
+              echo "MISSING REQUIRED TOOL: $tool — this runner must have jq and perl installed and on PATH."
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "One or more required tools are missing on this self-hosted runner. Install them and re-run."
+            exit 1
+          fi
 
       - name: Validate every plugin.json is valid JSON
         run: |

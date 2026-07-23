@@ -109,3 +109,8 @@ marketplace/
 # Validate registry JSON
 python3 -m json.tool registry.json
 ```
+
+**Requires `jq` and `perl` on `PATH`** — `generate-registry.sh` and the CI workflow
+(`.github/workflows/validate-registry.yml`) both depend on them. The self-hosted runner
+that executes this workflow must have both installed; the workflow's "Check required
+tooling is available" step fails fast with a clear message if either is missing.
