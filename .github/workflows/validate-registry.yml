@@ -36,6 +36,7 @@ jobs:
           set -euo pipefail
           status=0
           for f in plugins/*/.claude-plugin/plugin.json; do
+            [ -f "$f" ] || continue
             if ! jq empty "$f" 2>/dev/null; then
               echo "INVALID JSON: $f"
               status=1
