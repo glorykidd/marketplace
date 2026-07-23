@@ -55,7 +55,7 @@ Read all five files in full:
 
 ## Step 3: Produce the Evaluation
 
-Write a markdown evaluation to `evaluations/<CandidateLastName><CandidateFirstName>_evaluation.md` (no spaces).
+Write a markdown evaluation to `evaluations/<CandidateLastName><CandidateFirstName>_evaluation.md` (no spaces). Before building this filename, strip any character that isn't alphanumeric from the candidate's name (drop punctuation, shell metacharacters, whitespace) — never interpolate the raw resume-derived name into a filename or shell command. Always quote the resulting path when passing it to a Bash tool call.
 
 Use **exactly** this structure:
 
@@ -121,8 +121,10 @@ Do not add a comparative note about other candidates. Each evaluation stands alo
 Run the following command to produce the PDF:
 
 ```bash
-eval "$(/usr/libexec/path_helper)" && pandoc <evaluation_md_path> -o <evaluation_pdf_path>
+eval "$(/usr/libexec/path_helper)" && pandoc "<evaluation_md_path>" -o "<evaluation_pdf_path>"
 ```
+
+Always quote `<evaluation_md_path>` and `<evaluation_pdf_path>` — they are derived from candidate-supplied resume content.
 
 Where `<evaluation_pdf_path>` is the same path as the markdown file but with `.pdf` extension.
 

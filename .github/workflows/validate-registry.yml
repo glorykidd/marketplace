@@ -1,0 +1,51 @@
+name: Validate registry
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: [self-hosted, Windows]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate every plugin.json is valid JSON
+        run: |
+          set -euo pipefail
+          status=0
+          for f in plugins/*/.claude-plugin/plugin.json; do
+            if ! jq empty "$f" 2>/dev/null; then
+              echo "INVALID JSON: $f"
+              status=1
+            fi
+          done
+          for f in plugins/*/mcp/server.json; do
+            [ -f "$f" ] || continue
+            if ! jq empty "$f" 2>/dev/null; then
+              echo "INVALID JSON: $f"
+              status=1
+            fi
+          done
+          exit $status
+
+      - name: Regenerate registry.json and diff against committed copy
+        run: |
+          set -euo pipefail
+          cp registry.json "$RUNNER_TEMP/registry.committed.json"
+          ./generate-registry.sh
+          # generated field always changes; ignore it for the diff
+          jq 'del(.generated)' "$RUNNER_TEMP/registry.committed.json" > "$RUNNER_TEMP/committed.norm.json"
+          jq 'del(.generated)' registry.json > "$RUNNER_TEMP/generated.norm.json"
+          if ! diff -u "$RUNNER_TEMP/committed.norm.json" "$RUNNER_TEMP/generated.norm.json"; then
+            echo "registry.json is out of date — run ./generate-registry.sh and commit the result."
+            exit 1
+          fi
+
+      - name: Validate final registry.json is well-formed JSON
+        run: jq empty registry.json
