@@ -110,7 +110,9 @@ marketplace/
 python3 -m json.tool registry.json
 ```
 
-**Requires `jq` and `perl` on `PATH`** — `generate-registry.sh` and the CI workflow
-(`.github/workflows/validate-registry.yml`) both depend on them. The self-hosted runner
-that executes this workflow must have both installed; the workflow's "Check required
+**Requires `jq` and `perl`** — `generate-registry.sh` depends on both. The CI workflow
+(`.github/workflows/validate-registry.yml`) runs on a self-hosted Windows runner under
+`pwsh`; it expects `jq` on `PATH` and invokes `generate-registry.sh` via Git for Windows'
+bundled bash (`C:\Program Files\Git\bin\bash.exe`), so `perl` must be reachable from
+*that* bash, not necessarily the pwsh session's own `PATH`. The workflow's "Check required
 tooling is available" step fails fast with a clear message if either is missing.

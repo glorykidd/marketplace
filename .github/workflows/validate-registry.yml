@@ -12,57 +12,86 @@ jobs:
     runs-on: [ self-hosted ]
     defaults:
       run:
-        shell: bash
+        shell: pwsh
     steps:
       - uses: actions/checkout@v6
 
       - name: Check required tooling is available
         run: |
-          set -euo pipefail
-          missing=0
-          for tool in jq perl; do
-            if ! command -v "$tool" >/dev/null 2>&1; then
-              echo "MISSING REQUIRED TOOL: $tool — this runner must have jq and perl installed and on PATH."
-              missing=1
-            fi
-          done
-          if [ "$missing" -ne 0 ]; then
-            echo "One or more required tools are missing on this self-hosted runner. Install them and re-run."
+          $gitBash = "C:\Program Files\Git\bin\bash.exe"
+          $missing = $false
+
+          if (-not (Get-Command jq -ErrorAction SilentlyContinue)) {
+            Write-Host "MISSING REQUIRED TOOL: jq — this runner must have jq installed and on PATH."
+            $missing = $true
+          }
+
+          # generate-registry.sh is a bash script that shells out to perl — both must be
+          # reachable through the bash it runs under, not just this pwsh session's PATH.
+          if (-not (Test-Path $gitBash)) {
+            Write-Host "MISSING REQUIRED TOOL: bash — expected Git for Windows at $gitBash."
+            $missing = $true
+          } else {
+            & $gitBash -lc "command -v perl" | Out-Null
+            if ($LASTEXITCODE -ne 0) {
+              Write-Host "MISSING REQUIRED TOOL: perl — not found on PATH inside $gitBash."
+              $missing = $true
+            }
+          }
+
+          if ($missing) {
+            Write-Host "One or more required tools are missing on this self-hosted runner. Install them and re-run."
             exit 1
-          fi
+          }
 
       - name: Validate every plugin.json is valid JSON
         run: |
-          set -euo pipefail
-          status=0
-          for f in plugins/*/.claude-plugin/plugin.json; do
-            [ -f "$f" ] || continue
-            if ! jq empty "$f" 2>/dev/null; then
-              echo "INVALID JSON: $f"
-              status=1
-            fi
-          done
-          for f in plugins/*/mcp/server.json; do
-            [ -f "$f" ] || continue
-            if ! jq empty "$f" 2>/dev/null; then
-              echo "INVALID JSON: $f"
-              status=1
-            fi
-          done
+          $status = 0
+          Get-ChildItem -Path plugins -Filter plugin.json -Recurse -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -like "*\.claude-plugin\plugin.json" } |
+            ForEach-Object {
+              jq empty $_.FullName 2>$null
+              if ($LASTEXITCODE -ne 0) {
+                Write-Host "INVALID JSON: $($_.FullName)"
+                $status = 1
+              }
+            }
+          Get-ChildItem -Path plugins -Filter server.json -Recurse -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -like "*\mcp\server.json" } |
+            ForEach-Object {
+              jq empty $_.FullName 2>$null
+              if ($LASTEXITCODE -ne 0) {
+                Write-Host "INVALID JSON: $($_.FullName)"
+                $status = 1
+              }
+            }
           exit $status
 
       - name: Regenerate registry.json and diff against committed copy
         run: |
-          set -euo pipefail
-          cp registry.json "$RUNNER_TEMP/registry.committed.json"
-          ./generate-registry.sh
-          # generated field always changes; ignore it for the diff
-          jq 'del(.generated)' "$RUNNER_TEMP/registry.committed.json" > "$RUNNER_TEMP/committed.norm.json"
-          jq 'del(.generated)' registry.json > "$RUNNER_TEMP/generated.norm.json"
-          if ! diff -u "$RUNNER_TEMP/committed.norm.json" "$RUNNER_TEMP/generated.norm.json"; then
-            echo "registry.json is out of date — run ./generate-registry.sh and commit the result."
+          $committed = Join-Path $env:RUNNER_TEMP "registry.committed.json"
+          $committedNorm = Join-Path $env:RUNNER_TEMP "committed.norm.json"
+          $generatedNorm = Join-Path $env:RUNNER_TEMP "generated.norm.json"
+
+          Copy-Item registry.json $committed -Force
+          & "C:\Program Files\Git\bin\bash.exe" -lc "./generate-registry.sh"
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "generate-registry.sh failed."
             exit 1
-          fi
+          }
+
+          # generated field always changes; ignore it for the diff
+          jq 'del(.generated)' $committed | Set-Content -Path $committedNorm
+          jq 'del(.generated)' registry.json | Set-Content -Path $generatedNorm
+
+          $diff = Compare-Object (Get-Content $committedNorm) (Get-Content $generatedNorm)
+          if ($diff) {
+            Write-Host "registry.json is out of date — run ./generate-registry.sh and commit the result."
+            $diff | Format-Table -AutoSize | Out-String | Write-Host
+            exit 1
+          }
 
       - name: Validate final registry.json is well-formed JSON
-        run: jq empty registry.json
+        run: |
+          jq empty registry.json
+          exit $LASTEXITCODE
