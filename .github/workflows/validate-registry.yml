@@ -34,7 +34,22 @@ jobs:
           New-Item -ItemType Directory -Path $jqDir -Force | Out-Null
           $jqPath = Join-Path $jqDir "jq.exe"
 
-          Invoke-WebRequest -Uri "https://github.com/jqlang/jq/releases/latest/download/jq-windows-amd64.exe" -OutFile $jqPath
+          # Pinned version + published sha256 so this step can verify what it downloaded,
+          # rather than trusting an unauthenticated binary from a "latest" moving target.
+          $jqVersion = "jq-1.7.1"
+          $jqSha256 = "7451fbbf37feffb9bf262bd97c54f0da558c63f0748e64152dd87b0a07b6d6ab"
+          $jqUrl = "https://github.com/jqlang/jq/releases/download/$jqVersion/jq-windows-amd64.exe"
+
+          # -UseBasicParsing: WinPS 5.1's Invoke-WebRequest otherwise defaults to IE's COM
+          # engine, which throws on headless Windows runners where IE was never initialized.
+          Invoke-WebRequest -Uri $jqUrl -OutFile $jqPath -UseBasicParsing
+
+          $actualSha256 = (Get-FileHash -Path $jqPath -Algorithm SHA256).Hash
+          if ($actualSha256 -ne $jqSha256.ToUpper()) {
+            Write-Host "CHECKSUM MISMATCH for downloaded jq binary: expected $jqSha256, got $actualSha256"
+            Remove-Item $jqPath -Force
+            exit 1
+          }
 
           # Make jq available to this and every later step in the job.
           Add-Content -Path $env:GITHUB_PATH -Value $jqDir
