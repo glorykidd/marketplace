@@ -46,7 +46,7 @@ Read the job description, resume, and interviewer intro in full. Extract:
 
 ## Step 3: Produce the Assessment
 
-Write a markdown assessment to `questions/<CandidateLastName><CandidateFirstName>_assessment.md` (no spaces, last name first).
+Write a markdown assessment to `questions/<CandidateLastName><CandidateFirstName>_assessment.md` (no spaces, last name first). Before building this filename, strip any character that isn't alphanumeric from the candidate's name (drop punctuation, shell metacharacters, whitespace) — never interpolate the raw resume-derived name into a filename or shell command. Always quote the resulting path when passing it to a Bash tool call.
 
 Use **exactly** this structure:
 

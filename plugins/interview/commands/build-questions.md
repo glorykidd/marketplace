@@ -55,7 +55,7 @@ Read the assessment, JD, and interviewer intro in full. Identify:
 
 ## Step 4: Produce the Interview Guide
 
-Write to `questions/<CandidateLastName><CandidateFirstName>_questions.md`.
+Write to `questions/<CandidateLastName><CandidateFirstName>_questions.md`. Before building this filename, strip any character that isn't alphanumeric from the candidate's name (drop punctuation, shell metacharacters, whitespace) — never interpolate the raw resume-derived name into a filename or shell command. Always quote the resulting path when passing it to a Bash tool call.
 
 Use **exactly** this structure:
 

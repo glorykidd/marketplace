@@ -99,8 +99,23 @@ build_mcp_block() {
   bundle_version="$(extract_string_field "$mcp_file" "bundleVersion")"
   bundle_url="$(extract_string_field "$mcp_file" "bundleUrl")"
 
-  args="$(perl -0777 -ne 'if (/\"args\"\s*:\s*(\[[^\]]*\])/) { print $1 }' "$mcp_file" 2>/dev/null || echo "[]")"
-  env="$(perl -0777 -ne 'if (/\"env\"\s*:\s*(\{[^}]*\})/) { print $1 }' "$mcp_file" 2>/dev/null || echo "{}")"
+  args="$(jq -c '.args // []' "$mcp_file" 2>/dev/null)" || {
+    echo "ERROR: $mcp_file has invalid or missing 'args' — must be valid JSON" >&2
+    exit 1
+  }
+  env="$(jq -c '.env // {}' "$mcp_file" 2>/dev/null)" || {
+    echo "ERROR: $mcp_file has invalid or missing 'env' — must be valid JSON" >&2
+    exit 1
+  }
+
+  if ! echo "$args" | jq -e 'type == "array"' >/dev/null 2>&1; then
+    echo "ERROR: $mcp_file 'args' must be a JSON array" >&2
+    exit 1
+  fi
+  if ! echo "$env" | jq -e 'type == "object"' >/dev/null 2>&1; then
+    echo "ERROR: $mcp_file 'env' must be a JSON object" >&2
+    exit 1
+  fi
 
   cat <<EOF
       "mcp": {
