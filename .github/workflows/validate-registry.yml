@@ -1,6 +1,6 @@
 name: Validate registry
 
-# Runs on push to main only, not on pull_request — this is a self-hosted runner and the
+# Runs on push to main only, not on pull_request - this is a self-hosted runner and the
 # repo accepts external plugin submissions via PR. Combined with CODEOWNERS gating who can
 # merge to main, this keeps untrusted PR code from ever executing on the runner.
 on:
@@ -12,34 +12,51 @@ jobs:
     runs-on: [ self-hosted ]
     defaults:
       run:
-        # Windows PowerShell (5.1), not PowerShell Core (pwsh) — this runner has no
+        # Windows PowerShell (5.1), not PowerShell Core (pwsh) - this runner has no
         # pwsh on PATH, but powershell.exe ships built into every Windows install.
         shell: powershell
     env:
-      # Single source of truth for Git for Windows' bundled bash — generate-registry.sh
+      # Single source of truth for Git for Windows' bundled bash - generate-registry.sh
       # is a bash script and must be invoked through it rather than relying on PATH.
       GIT_BASH: C:\Program Files\Git\bin\bash.exe
     steps:
       - uses: actions/checkout@v6
+
+      - name: Install jq if missing
+        run: |
+          if (Get-Command jq -ErrorAction SilentlyContinue) {
+            Write-Host "jq already present: $((Get-Command jq).Source)"
+            exit 0
+          }
+
+          Write-Host "jq not found on PATH - downloading a local copy for this job."
+          $jqDir = Join-Path $env:RUNNER_TEMP "jq-bin"
+          New-Item -ItemType Directory -Path $jqDir -Force | Out-Null
+          $jqPath = Join-Path $jqDir "jq.exe"
+
+          Invoke-WebRequest -Uri "https://github.com/jqlang/jq/releases/latest/download/jq-windows-amd64.exe" -OutFile $jqPath
+
+          # Make jq available to this and every later step in the job.
+          Add-Content -Path $env:GITHUB_PATH -Value $jqDir
 
       - name: Check required tooling is available
         run: |
           $missing = $false
 
           if (-not (Get-Command jq -ErrorAction SilentlyContinue)) {
-            Write-Host "MISSING REQUIRED TOOL: jq — this runner must have jq installed and on PATH."
+            Write-Host "MISSING REQUIRED TOOL: jq - install failed or is still not on PATH."
             $missing = $true
           }
 
-          # generate-registry.sh is a bash script that shells out to perl — both must be
+          # generate-registry.sh is a bash script that shells out to perl - both must be
           # reachable through the bash it runs under, not just this pwsh session's PATH.
           if (-not (Test-Path $env:GIT_BASH)) {
-            Write-Host "MISSING REQUIRED TOOL: bash — expected Git for Windows at $env:GIT_BASH."
+            Write-Host "MISSING REQUIRED TOOL: bash - expected Git for Windows at $env:GIT_BASH."
             $missing = $true
           } else {
             & $env:GIT_BASH -lc "command -v perl" | Out-Null
             if ($LASTEXITCODE -ne 0) {
-              Write-Host "MISSING REQUIRED TOOL: perl — not found on PATH inside $env:GIT_BASH."
+              Write-Host "MISSING REQUIRED TOOL: perl - not found on PATH inside $env:GIT_BASH."
               $missing = $true
             }
           }
@@ -86,7 +103,7 @@ jobs:
 
           $diff = Compare-Object (Get-Content $committedNorm) (Get-Content $generatedNorm)
           if ($diff) {
-            Write-Host "registry.json is out of date — run ./generate-registry.sh and commit the result."
+            Write-Host "registry.json is out of date - run ./generate-registry.sh and commit the result."
             $diff | Format-Table -AutoSize | Out-String | Write-Host
             exit 1
           }
