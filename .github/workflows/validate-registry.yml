@@ -13,12 +13,15 @@ jobs:
     defaults:
       run:
         shell: pwsh
+    env:
+      # Single source of truth for Git for Windows' bundled bash — generate-registry.sh
+      # is a bash script and must be invoked through it rather than relying on PATH.
+      GIT_BASH: C:\Program Files\Git\bin\bash.exe
     steps:
       - uses: actions/checkout@v6
 
       - name: Check required tooling is available
         run: |
-          $gitBash = "C:\Program Files\Git\bin\bash.exe"
           $missing = $false
 
           if (-not (Get-Command jq -ErrorAction SilentlyContinue)) {
@@ -28,13 +31,13 @@ jobs:
 
           # generate-registry.sh is a bash script that shells out to perl — both must be
           # reachable through the bash it runs under, not just this pwsh session's PATH.
-          if (-not (Test-Path $gitBash)) {
-            Write-Host "MISSING REQUIRED TOOL: bash — expected Git for Windows at $gitBash."
+          if (-not (Test-Path $env:GIT_BASH)) {
+            Write-Host "MISSING REQUIRED TOOL: bash — expected Git for Windows at $env:GIT_BASH."
             $missing = $true
           } else {
-            & $gitBash -lc "command -v perl" | Out-Null
+            & $env:GIT_BASH -lc "command -v perl" | Out-Null
             if ($LASTEXITCODE -ne 0) {
-              Write-Host "MISSING REQUIRED TOOL: perl — not found on PATH inside $gitBash."
+              Write-Host "MISSING REQUIRED TOOL: perl — not found on PATH inside $env:GIT_BASH."
               $missing = $true
             }
           }
@@ -46,26 +49,21 @@ jobs:
 
       - name: Validate every plugin.json is valid JSON
         run: |
-          $status = 0
-          Get-ChildItem -Path plugins -Filter plugin.json -Recurse -ErrorAction SilentlyContinue |
-            Where-Object { $_.FullName -like "*\.claude-plugin\plugin.json" } |
-            ForEach-Object {
-              jq empty $_.FullName 2>$null
-              if ($LASTEXITCODE -ne 0) {
-                Write-Host "INVALID JSON: $($_.FullName)"
-                $status = 1
-              }
-            }
-          Get-ChildItem -Path plugins -Filter server.json -Recurse -ErrorAction SilentlyContinue |
-            Where-Object { $_.FullName -like "*\mcp\server.json" } |
-            ForEach-Object {
-              jq empty $_.FullName 2>$null
-              if ($LASTEXITCODE -ne 0) {
-                Write-Host "INVALID JSON: $($_.FullName)"
-                $status = 1
-              }
-            }
-          exit $status
+          $manifestFiles =
+            @(Get-ChildItem -Path plugins -Filter plugin.json -Recurse -ErrorAction SilentlyContinue |
+              Where-Object { $_.FullName -like "*\.claude-plugin\plugin.json" }) +
+            @(Get-ChildItem -Path plugins -Filter server.json -Recurse -ErrorAction SilentlyContinue |
+              Where-Object { $_.FullName -like "*\mcp\server.json" })
+
+          $invalid = $manifestFiles | Where-Object {
+            jq empty $_.FullName 2>$null
+            $LASTEXITCODE -ne 0
+          }
+
+          if ($invalid) {
+            $invalid | ForEach-Object { Write-Host "INVALID JSON: $($_.FullName)" }
+            exit 1
+          }
 
       - name: Regenerate registry.json and diff against committed copy
         run: |
@@ -74,7 +72,7 @@ jobs:
           $generatedNorm = Join-Path $env:RUNNER_TEMP "generated.norm.json"
 
           Copy-Item registry.json $committed -Force
-          & "C:\Program Files\Git\bin\bash.exe" -lc "./generate-registry.sh"
+          & $env:GIT_BASH -lc "./generate-registry.sh"
           if ($LASTEXITCODE -ne 0) {
             Write-Host "generate-registry.sh failed."
             exit 1
