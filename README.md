@@ -41,3 +41,5 @@ Quick steps:
 4. Run `./generate-registry.sh`
 5. Add your plugin entry to `.claude-plugin/marketplace.json`
 6. Open a pull request
+
+Once merged to `main`, CI (`.github/workflows/validate-registry.yml`) re-runs `./generate-registry.sh` and fails the build if `registry.json` doesn't match — always regenerate and commit it before merging.
