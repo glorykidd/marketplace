@@ -11,8 +11,8 @@
     "owner": "glorykidd",
     "maxDataClassification": "Public",
     "llmModel": "any",
-    "networkExposure": "none",
-    "externalDependencies": [],
+    "networkExposure": "outbound",
+    "externalDependencies": ["gh"],
     "writeActions": true,
     "approvalStatus": "approved",
     "lastReviewedDate": "2026-07-27"

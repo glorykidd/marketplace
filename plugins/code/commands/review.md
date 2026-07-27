@@ -1,6 +1,6 @@
 ---
 description: Multi-agent code review of a PR, a git ref range, or the current diff if no PR exists yet
-allowed-tools: Write, Bash(gh issue view:*), Bash(gh search:*), Bash(gh issue list:*), Bash(gh pr comment:*), Bash(gh pr diff:*), Bash(gh pr view:*), Bash(gh pr list:*), Bash(git diff:*), Bash(git status:*), Bash(git rev-parse:*), Bash(git merge-base:*), Bash(git remote show:*), Bash(git blame:*), Bash(git log:*), Bash(git show:*)
+allowed-tools: Write, Bash(gh pr comment:*), Bash(gh pr diff:*), Bash(gh pr view:*), Bash(gh pr list:*), Bash(git diff:*), Bash(git status:*), Bash(git rev-parse:*), Bash(git merge-base:*), Bash(git remote show:*), Bash(git blame:*), Bash(git log:*), Bash(git show:*), Bash(find:*), Bash(mktemp:*), Bash(rm:*)
 argument-hint: "[PR number|URL|git ref range] [--improve]"
 ---
 

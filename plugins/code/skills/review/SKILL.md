@@ -1,3 +1,10 @@
+---
+name: review
+description: Multi-agent code review that works on a PR, an explicit git ref range, or the current diff if no PR exists yet. Called by /code:review.
+allowed-tools: Write, Bash(gh pr comment:*), Bash(gh pr diff:*), Bash(gh pr view:*), Bash(gh pr list:*), Bash(git diff:*), Bash(git status:*), Bash(git rev-parse:*), Bash(git merge-base:*), Bash(git remote show:*), Bash(git blame:*), Bash(git log:*), Bash(git show:*), Bash(find:*), Bash(mktemp:*), Bash(rm:*)
+argument-hint: "[PR number|URL|git ref range] [--improve]"
+---
+
 # Code Review
 
 Multi-agent code review that works on a PR, an explicit git ref range, or — when no PR exists yet — the current uncommitted or branch diff.
@@ -58,7 +65,9 @@ Before producing PR-mode output, invoke `eligibility-checker` again on the same 
 
 ## Step 7 — Optional improve pass
 
-If `--improve` was passed, invoke the existing `code-improver` agent (`plugins/code/agents/improve.md`) on the files touched by the diff. Fold its readability/performance/best-practice suggestions into the output as an additional "Readability & Design" section — do not duplicate anything already surfaced by the Step 4 agents. `code-improver` remains independently runnable via `/code:improve`; this is an additive call into it, not a fork of its logic.
+If `--improve` was passed, invoke the existing `code-improver` agent (`plugins/code/agents/improve.md`) on the files touched by the diff. Fold its readability/performance/best-practice suggestions into the output as an additional "Readability & Design" section — do not duplicate anything already surfaced by the Step 4 agents. This is an additive call into the `code-improver` agent's logic, not a copy of it.
+
+Note: `/code:improve` (`plugins/code/commands/improve.md`) is a separate, standalone entry point with its own rubric and output format (a saved `claude-findings/` report) — it does not invoke `code-improver` and is not required to match this step's output shape.
 
 ## Step 8 — Output
 
