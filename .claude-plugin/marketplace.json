@@ -95,6 +95,28 @@
       }
     },
     {
+      "name": "code",
+      "description": "Code quality toolkit: explain code and gotchas, run a multi-agent review of a PR or a pre-PR diff, and improve code for readability and best practices",
+      "version": "1.0.0",
+      "author": {
+        "name": "glorykidd"
+      },
+      "source": "./plugins/code",
+      "category": "development",
+      "metadata": {
+        "artifactName": "Code Quality Plugin",
+        "type": "bundle",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "none",
+        "externalDependencies": [],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-07-27"
+      }
+    },
+    {
       "name": "security-review",
       "description": "Comprehensive security audit against OWASP Top 10, CWE, NIST 800-53, CIS Benchmarks, SOC 2, ISO 27001",
       "version": "1.0.0",
