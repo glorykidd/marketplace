@@ -43,6 +43,8 @@ Invoke the `pr-summarizer` agent once, passing the mode and the PR reference or 
 - A change summary
 - The list of relevant CLAUDE.md file paths for touched directories
 
+In PR mode, also capture the full commit SHA now — run `gh pr view <n> --json headRefOid -q .headRefOid` (or read it from the `pr-summarizer` output if it already fetched `gh pr view`). Keep this SHA for Step 8's GitHub permalinks; never substitute a shell command for it inline when building links later.
+
 ## Step 4 — Parallel specialized review
 
 Launch these five agents **in parallel**, each given the same diff and the CLAUDE.md file list from Step 3:

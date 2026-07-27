@@ -7,7 +7,7 @@ argument-hint: "[PR number|URL|git ref range] [--improve]"
 Locate the skill file:
 
 ```bash
-find ~/.claude -path "*/code/skills/review/SKILL.md" 2>/dev/null | head -1
+find "${CLAUDE_HOME:-$HOME/.claude}" /usr/local/share/claude -path "*/code/skills/review/SKILL.md" 2>/dev/null | head -1
 ```
 
 If this command produces no output, the plugin is not installed correctly — stop and tell the user to reinstall the `code` plugin rather than proceeding without instructions.
