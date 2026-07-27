@@ -1,0 +1,20 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "Code quality toolkit: explain code and gotchas, run a multi-agent review of a PR or a pre-PR diff, and improve code for readability and best practices",
+  "author": {
+    "name": "glorykidd"
+  },
+  "metadata": {
+    "artifactName": "Code Quality Plugin",
+    "type": "bundle",
+    "owner": "glorykidd",
+    "maxDataClassification": "Public",
+    "llmModel": "any",
+    "networkExposure": "outbound",
+    "externalDependencies": ["gh"],
+    "writeActions": true,
+    "approvalStatus": "approved",
+    "lastReviewedDate": "2026-07-27"
+  }
+}

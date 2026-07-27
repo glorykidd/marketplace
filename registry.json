@@ -1,7 +1,26 @@
 {
   "schema": "1.0.0",
-  "generated": "2026-07-23T11:34:09Z",
+  "generated": "2026-07-27T12:03:00Z",
   "plugins": [
+    {
+      "name": "code",
+      "version": "1.0.0",
+      "type": "bundle",
+      "description": "Code quality toolkit: explain code and gotchas, run a multi-agent review of a PR or a pre-PR diff, and improve code for readability and best practices",
+      "author": "glorykidd",
+      "files": ["commands/explain.md","commands/improve.md","commands/review.md","agents/confidence-scorer.md","agents/eligibility-checker.md","agents/improve.md","agents/pr-summarizer.md","agents/reviewer-bugs.md","agents/reviewer-comments.md","agents/reviewer-coverage.md","agents/reviewer-guidelines.md","agents/reviewer-history.md","skills/review/SKILL.md"],
+      "metadata": {
+        "artifactName": "Code Quality Plugin",
+        "owner": "glorykidd",
+        "maxDataClassification": "Public",
+        "llmModel": "any",
+        "networkExposure": "outbound",
+        "externalDependencies": ["gh"],
+        "writeActions": true,
+        "approvalStatus": "approved",
+        "lastReviewedDate": "2026-07-27"
+      }
+    },
     {
       "name": "commit-message",
       "version": "1.0.0",
